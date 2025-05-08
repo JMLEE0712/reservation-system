@@ -35,16 +35,18 @@ public class UserRepository {
         return new ArrayList<>(users.values());
     }
 
-    //방 추가 --> 기존 이전 방식.
-    public String saveRoom(String email, Room room) {
-        User oldUser = users.get(email);
-        User updatedUser = oldUser.withRoom(room);
-        users.put(email, updatedUser); // 주어진 키에 값을 저장하거나, 키가 이미 존재하면 기존 값 덮어씀. --> 업데이트 됨.
-
-        return email;
 
 
-    }
+//    //방 추가 --> 기존 이전 방식.
+//    public String saveRoom(String email, Room room) {
+//        User oldUser = users.get(email);
+//        User updatedUser = oldUser.withRoom(room);
+//        users.put(email, updatedUser); // 주어진 키에 값을 저장하거나, 키가 이미 존재하면 기존 값 덮어씀. --> 업데이트 됨.
+//
+//        return email;
+//
+//
+//    }
 
 
 }

@@ -33,20 +33,24 @@
 <!-- 로그인 정보 표시 -->
 <div class="header">
 <!--    <p>계정명: [[${email}]]</p>-->
-    <p>계정명: <span th:text="${email}"></span></p>
-    <p>내가 예약한 토론실: <span th:text="${room}"></span></p>
-    <p>예약 날짜: <span th:text="${date}"></span></p>
+    <p>계정명: <span th:text="${user.email}"></span></p>
+    <p>내가 예약한 토론실: <span th:if="${user.reservation !=null}" th:text="${user.reservation.room}"></span></p>
+    <p>예약 날짜: <span th:if="${user.reservation !=null}" th:text="${user.reservation.date}"></span></p>
 
     <p>예약 시간 :
-        <span th:each="time, iterStat : ${times}">
-        <span th:text="${time}"></span>
-        <span th:if="${!iterStat.last}">, </span>
+        <span th:if="${user.reservation!=null}">
+            <span th:each="time, iterStat : ${user.reservation.times}">
+                <span th:text="${time}"></span>
+                <span th:if="${!iterStat.last}">, </span>
+            </span>
+            </span>
     </span>
 
     </p>
-    <a href="/cancel"> 예약 취소 </a>
 
-    <!-- 여기에 예약된 토론실을 추가할 수 있습니다. -->
+    <p><a href="/cancel"> 예약 취소 </a></p>
+    <p><a href="/logout">로그 아웃</a></p>
+
 </div>
 
 <!-- 설계도 (스터디 카페처럼 좌석 배치) -->

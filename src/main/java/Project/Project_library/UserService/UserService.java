@@ -38,13 +38,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
-//    ROOM 추가.
-    public User roomAdd(String email, Room room) {
-        String Idemail = userRepository.saveRoom(email, room);
-        User roomuser = userRepository.findOne(Idemail);
-        return roomuser;
+////    ROOM 추가.
+//    public User roomAdd(String email, Room room) {
+//        String Idemail = userRepository.saveRoom(email, room);
+//        User roomuser = userRepository.findOne(Idemail);
+//        return roomuser;
+//
+//    }
 
-    }
+
+
+
     // 예약 추가 (detail 시간 추가)
     public void reserve(String email, Reservation reservation) {
         User user = userRepository.findByEmail(email);

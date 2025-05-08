@@ -11,6 +11,7 @@
   <tr>
     <th>이메일</th>
     <th>비밀번호</th>
+<!--    <th>[예약방번호]</th>-->
     <th>[예약방번호]</th>
     <th>[예약 날짜] </th>
     <th>[예약 시간] </th>
@@ -21,6 +22,9 @@
   <tr th:each="user : ${users}">
     <td th:text="${user.email}"></td>
     <td th:text="${user.password}"></td>
+
+<!--    <td th:text="${user?.room}"></td>-->
+
     <td th:text="${user.reservation?.room}">-</td>
     <td th:text="${user.reservation?.date}">-</td>
 
@@ -35,7 +39,8 @@
   </tbody>
 </table>
 
-<a href="/home">메인으로.</a>
+<!--로그아웃 하고 바로 가면 세션 무효화 되어서 에러.-->
+<a href="/main">메인으로.</a>
 
 </body>
 </html>

@@ -1,25 +1,26 @@
 package Project.Project_library.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Reservation {
-    private String date; //yyyy-MM-dd
+    private LocalDate date; //yyyy-MM-dd
     private List<String> times; //["10:00", "11:00", "12:00"]
     private Room room;
 
     //생성자
-    public Reservation(String date, List<String> times, Room room) {
+    public Reservation(LocalDate date, List<String> times, Room room) {
         this.date = date;
         this.times = times;
         this.room = room;
     }
 
     //Getter Setter
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -25,15 +26,13 @@ public class RoomController {
     private final TimeRepository timeRepository;
 
     /* 나중에 변경.*/
-    private final UserRepository userRepository;
 
     @Autowired
-    public RoomController(UserService userService, TimeService timeService, TimeRepository timeRepository, UserRepository userRepository) {
+    public RoomController(UserService userService, TimeService timeService, TimeRepository timeRepository) {
         this.userService = userService;
         this.timeService = timeService;
         this.timeRepository = timeRepository;
-        //
-        this.userRepository =userRepository;
+
     }
 
 
@@ -45,19 +44,26 @@ public class RoomController {
     {
 
         String email = (String) session.getAttribute("loginUser");
+        User user = userService.findOne(email);
         if (email != null) {
 
-            User valid = userRepository.findOne(email);
-
-            if (valid.getReservation()==null) {
-                User user = userService.roomAdd(email, room);
-            }
+//            User valid = userRepository.findOne(email);
+//
+////            if (valid.getReservation()==null) {
+////                //예약이 없으면 룸 번호 추가.
+////                User user = userService.roomAdd(email, room);
+////            }
 
             List<String> timeTemplate = timeService.timeShow(room);
 
-            model.addAttribute("email",email);
+//            model.addAttribute("email",email);
             model.addAttribute("room",room);
             model.addAttribute("times",timeTemplate);
+
+            model.addAttribute("user",user);
+
+            //현재 날짜 반환.
+            model.addAttribute("date", LocalDate.now());
 
         }
 
@@ -65,7 +71,7 @@ public class RoomController {
     }
 
     @PostMapping("/reserve") //detail.html 에서 시간 날짜 정보 반환.
-    public String reserve(@RequestParam String date,
+    public String reserve(@RequestParam LocalDate date,
                           @RequestParam List<String> times,
                           @RequestParam Room room,
                           HttpSession session,
@@ -77,14 +83,17 @@ public class RoomController {
             userService.reserve(email, reservation);
             timeService.reserve(date,room,times);
 
-            //임시
-            List<String> reserved = timeRepository.getReservedTimes(date, room);
+            User user = userService.findOne(email);
 
-            model.addAttribute("email", email);
+            //임시
+//            List<String> reserved = timeRepository.getReservedTime(date, room);
+
+//            model.addAttribute("email", email);
+            model.addAttribute("user",user);
+
             model.addAttribute("date", date);
             model.addAttribute("times",times);
             model.addAttribute("room",room);
-            model.addAttribute("reservedTimes", reserved);
 
 
             return "main";
@@ -94,9 +103,6 @@ public class RoomController {
             model.addAttribute("error", "예약은 연속 3시간까지 가능합니다.");
             return "detail";
         }
-
-
-
 
     }
 
@@ -110,10 +116,13 @@ public class RoomController {
         User user = userService.findOne(email);
 
         //인라인으로 변경.
-        model.addAttribute("email", user.getEmail());
-        model.addAttribute("room", user.getRoom());
-        model.addAttribute("date", user.getReservation().getDate());
-        model.addAttribute("times", user.getReservation().getTimes());
+
+        model.addAttribute("user", user);
+
+//        model.addAttribute("email", user.getEmail());
+//        model.addAttribute("room", user.getReservation().getRoom());
+//        model.addAttribute("date", user.getReservation().getDate());
+//        model.addAttribute("times", user.getReservation().getTimes());
 
 
 

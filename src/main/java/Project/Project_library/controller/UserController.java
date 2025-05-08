@@ -25,7 +25,7 @@ public class UserController {
     // 회원가입 처리
     @PostMapping("/join")
     public String join(@RequestParam String email, @RequestParam String password) {
-        User user = new User(email, password, null);
+        User user = new User(email, password);
         userService.join(user); // 서비스 계층에서 회원 가입 처리
         return "redirect:/"; // 회원가입 후 로그인 페이지로 리다이렉트
     }

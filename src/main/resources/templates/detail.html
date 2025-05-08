@@ -21,16 +21,12 @@
 <h2>토론실 예약 - <span th:text="${room}"></span></h2>
 
 <form method="post" action="/reserve">
-  <label for="date">날짜 선택:</label>
-  <input type="date" id="date" name="date" required>
+  <label for="date">오늘 날짜:</label>
+  <input type="date" id="date" name="date" th:value="${date}" readonly>
 
   <div id="timeSlots">
     <!-- 시간 선택 버튼 -->
-<!--    <div class="time-slot" data-time="10:00">10:00</div>
-    <div class="time-slot" data-time="11:00">11:00</div>
-    <div class="time-slot" data-time="12:00">12:00</div>
-    <div class="time-slot" data-time="13:00">13:00</div>
-    <div class="time-slot" data-time="14:00">14:00</div>-->
+
     <div th:each="time : ${times}" class="time-slot" th:data-time="${time}" th:text="${time}">시간</div>
     <!-- 원하는 시간 추가 가능 -->
   </div>
